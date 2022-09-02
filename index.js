@@ -1,4 +1,4 @@
-require('dotenv').config({path: 'C:/Users/shrey/OneDrive/Desktop/url-shorterner/keys.env'});
+require('dotenv').config({path: './keys.env'});
 const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
