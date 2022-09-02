@@ -2,7 +2,7 @@ let mongoose = require('mongoose');
 let validator = require('validator');
 
 let urlDBSchema = new mongoose.Schema({
-    url: {
+    original_url: {
         type: String,
         required: true,
         unique: true,
@@ -11,7 +11,7 @@ let urlDBSchema = new mongoose.Schema({
           return validator.isURL(value)
         }
       },
-    shortUrl: {
+    short_url: {
         type: String,
         required: true,
         unique: true,

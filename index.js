@@ -22,16 +22,20 @@ app.get('/', function(req, res) {
 });
 
 // POST Req
-app.post('/api/shorturl', function(req, res) {
+app.post('/api/shorturl', async function(req, res) {
   let url = req.body.url;
-  res.send(JSON.stringify(dbFunctions.saveUrl(url)));
+  res.send(JSON.stringify(await dbFunctions.saveUrl(url)));
 });
 
 // GET Req
-app.get('/api/shorturl/:code', function(req, res) {
+app.get('/api/shorturl/:code', async function(req, res) {
   const code = req.params.code;
-  let url = dbFunctions.findUrl(code);
-  if (url) res.redirect(url);
+  let url = await dbFunctions.findUrl(code);
+  console.log('got:', url);
+  if(url && url.length == 1) {
+    console.log('redirecting to:', url[0].original_url);
+    res.redirect(url[0].original_url);
+  }
 });
 
 app.listen(port, function() {

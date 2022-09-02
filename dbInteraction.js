@@ -8,10 +8,10 @@ const dbFunctions = {
         }
         return val;
     },
-    findUrl: (code) => {
+    findUrl: async (code) => {
         let res;
-        urlDBModel.find({
-            shortUrl: code   // search query
+        await urlDBModel.find({
+            short_url: code   // search query
           })
           .then(doc => {
             console.log("found", doc)
@@ -22,26 +22,26 @@ const dbFunctions = {
           })
         return res;
     },
-    isCodeUnique: (code) => {
-        let res = dbFunctions.findUrl(code);
+    isCodeUnique: async (code) => {
+        let res = await dbFunctions.findUrl(code);
         if (!res || res.length == 0) return true;
         return false;
     },
-    getUniqueCode: () => {
+    getUniqueCode: async () => {
         let code, isUnique = false;
         while(!isUnique){
             code = dbFunctions.generateRandomCode();
-            isUnique = dbFunctions.isCodeUnique(code);
+            isUnique = await dbFunctions.isCodeUnique(code);
         }
         return code;
     },
-    saveUrl: (url) => {
-        let shortUrl = dbFunctions.getUniqueCode();
+    saveUrl: async (url) => {
+        let shortUrl = await dbFunctions.getUniqueCode();
         let row = {original_url: url, short_url: shortUrl};
         
         let urlModel = new urlDBModel(row)
             
-        urlModel.save()
+        await urlModel.save()
             .then(doc => {
                 console.log(doc);
             })
