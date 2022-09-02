@@ -37,7 +37,7 @@ const dbFunctions = {
     },
     saveUrl: (url) => {
         let shortUrl = dbFunctions.getUniqueCode();
-        let row = {url: url, shortUrl: shortUrl};
+        let row = {original_url: url, short_url: shortUrl};
         
         let urlModel = new urlDBModel(row)
             
